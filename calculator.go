@@ -4,7 +4,6 @@ package calculator
 import (
 	"fmt"
 	"math"
-	"strconv"
 	"strings"
 )
 
@@ -70,16 +69,11 @@ func StringMath(input string) (float64, error) {
 	var err error
 
 	operations := []string{"+", "-", "*", "/"}
-	input = strings.ReplaceAll(input, " ", "")
 	for _, op := range operations {
 		if strings.Contains(input, op) {
-			numbers := strings.Split(input, op)
 			operation = op
-			a, err = strconv.ParseFloat(numbers[0], 64)
-			if err != nil {
-				return 0, err
-			}
-			b, err = strconv.ParseFloat(numbers[1], 64)
+			input = strings.Replace(input, op, " ", 1)
+			_, err = fmt.Sscanf(input, "%f%f", &a, &b)
 			if err != nil {
 				return 0, err
 			}
