@@ -18,19 +18,12 @@ func Add(a, b float64, nums ...float64) float64 {
 }
 
 // Subtract takes a list of numbers and returns the result of subtracting them from each other.
-func Subtract(nums ...float64) float64 {
-	switch len(nums) {
-	case 0:
-		return 0
-	case 1:
-		return nums[0]
-	default:
-		var sum float64 = nums[0]
-		for _, n := range nums[1:] {
-			sum -= n
-		}
-		return sum
+func Subtract(a, b float64, nums ...float64) float64 {
+	var result float64 = a - b
+	for _, n := range nums {
+		result -= n
 	}
+	return result
 }
 
 // Multiply takes a list of numbers and multiplies them.
