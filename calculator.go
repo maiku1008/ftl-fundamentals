@@ -27,19 +27,12 @@ func Subtract(a, b float64, nums ...float64) float64 {
 }
 
 // Multiply takes a list of numbers and multiplies them.
-func Multiply(nums ...float64) float64 {
-	switch len(nums) {
-	case 0:
-		return 0
-	case 1:
-		return nums[0]
-	default:
-		var product float64 = nums[0]
-		for _, n := range nums[1:] {
-			product *= n
-		}
-		return product
+func Multiply(a, b float64, nums ...float64) float64 {
+	var product float64 = a * b
+	for _, n := range nums {
+		product *= n
 	}
+	return product
 }
 
 // Divide takes a list of numbers and divides them.
