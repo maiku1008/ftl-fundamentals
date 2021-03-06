@@ -11,20 +11,19 @@ func TestAdd(t *testing.T) {
 	t.Parallel()
 	var testCases = []struct {
 		name string
+		a, b float64
 		nums []float64
 		want float64
 	}{
-		{"positive", []float64{2, 2}, 4},
-		{"negative", []float64{-2, 5}, 3},
-		{"one zero", []float64{0, 3}, 3},
-		{"two zeroes", []float64{0, 0}, 0},
-		{"decimal", []float64{2.5, 4}, 6.5},
-		{"empty slice", []float64{}, 0},
-		{"one item in slice", []float64{3}, 3},
-		{"many numbers", []float64{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 55},
+		{name: "positive", a: 2, b: 2, want: 4},
+		{name: "negative", a: -2, b: 5, want: 3},
+		{name: "one zero", a: 0, b: 3, want: 3},
+		{name: "two zeroes", a: 0, b: 0, want: 0},
+		{name: "decimal", a: 2.5, b: 4, want: 6.5},
+		{name: "many numbers", a: 1, b: 2, nums: []float64{3, 4, 5, 6, 7, 8, 9, 10}, want: 55},
 	}
 	for _, tc := range testCases {
-		got := calculator.Add(tc.nums...)
+		got := calculator.Add(tc.a, tc.b, tc.nums...)
 		if tc.want != got {
 			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
 		}

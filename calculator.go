@@ -9,19 +9,12 @@ import (
 )
 
 // Add takes a list of numbers and returns the result of adding them together.
-func Add(nums ...float64) float64 {
-	switch len(nums) {
-	case 0:
-		return 0
-	case 1:
-		return nums[0]
-	default:
-		var sum float64
-		for _, n := range nums {
-			sum += n
-		}
-		return sum
+func Add(a, b float64, nums ...float64) float64 {
+	var result float64 = a + b
+	for _, n := range nums {
+		result += n
 	}
+	return result
 }
 
 // Subtract takes a list of numbers and returns the result of subtracting them from each other.
