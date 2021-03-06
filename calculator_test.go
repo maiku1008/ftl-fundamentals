@@ -95,21 +95,20 @@ func TestDivide(t *testing.T) {
 	t.Parallel()
 	var testCases = []struct {
 		name        string
+		a, b        float64
 		nums        []float64
 		want        float64
 		errExpected bool
 	}{
-		{"positive", []float64{2, 2}, 1, false},
-		{"negative", []float64{-2, 5}, -0.4, false},
-		{"one zero", []float64{0, 3}, 0, true},
-		{"two zeroes", []float64{0, 0}, 0, true},
-		{"decimal", []float64{2.5, 4}, 0.625, false},
-		{"empty slice", []float64{}, 0, false},
-		{"one item in slice", []float64{3}, 3, false},
-		{"many numbers", []float64{1024, 2, 2, 2, 2, 2, 2, 2, 2, 2}, 2, false},
+		{name: "positive", a: 2, b: 2, want: 1, errExpected: false},
+		{name: "negative", a: -4, b: 2, want: -2, errExpected: false},
+		{name: "one zero", a: 0, b: 3, want: 0, errExpected: true},
+		{name: "two zeroes", a: 0, b: 0, want: 0, errExpected: true},
+		{name: "decimal", a: 2.5, b: 4, want: 0.625, errExpected: false},
+		{name: "many numbers", a: 1024, b: 2, nums: []float64{2, 2, 2, 2, 2, 2, 2, 2}, want: 2, errExpected: false},
 	}
 	for _, tc := range testCases {
-		got, err := calculator.Divide(tc.nums...)
+		got, err := calculator.Divide(tc.a, tc.b, tc.nums...)
 		if tc.errExpected {
 			if err == nil {
 				t.Errorf("test name: %s expected error, got nil", tc.name)

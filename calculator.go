@@ -37,29 +37,27 @@ func Multiply(a, b float64, nums ...float64) float64 {
 
 // Divide takes a list of numbers and divides them.
 // Error is returned when dividing by 0.
-func Divide(nums ...float64) (float64, error) {
-	switch len(nums) {
-	case 0:
-		return 0, nil
-	case 1:
-		return nums[0], nil
-	default:
-		var product float64 = nums[0]
-		for _, n := range nums[1:] {
-			if n == 0 || product == 0 {
-				return 0, fmt.Errorf("cannot divide by zero")
-			}
-			product /= n
-		}
-		return product, nil
+func Divide(a, b float64, nums ...float64) (float64, error) {
+	err := fmt.Errorf("cannot divide by zero")
+	if a == 0 || b == 0 {
+		return 0, err
 	}
+
+	var result float64 = a / b
+	for _, n := range nums {
+		if n == 0 || result == 0 {
+			return 0, err
+		}
+		result /= n
+	}
+	return result, nil
 }
 
 // Sqrt finds the square root of a number
 // Running this on 0 or negative numbers returns an error
 func Sqrt(num float64) (float64, error) {
 	if num < 0 {
-		return 0, fmt.Errorf("not allowed to find the square root of a negative numbers")
+		return 0, fmt.Errorf("not allowed to find the square root of a negative number: %f", num)
 	}
 	return math.Sqrt(num), nil
 }
