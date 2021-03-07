@@ -109,17 +109,12 @@ func TestDivide(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		got, err := calculator.Divide(tc.a, tc.b, tc.nums...)
-		if tc.errExpected {
-			if err == nil {
-				t.Errorf("test name: %s expected error, got nil", tc.name)
-			}
-		} else {
-			if err != nil {
-				t.Errorf("test name: %s returned unexpected error: %s", tc.name, err)
-			}
-			if tc.want != got {
-				t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
-			}
+		errReceived := err != nil
+		if tc.errExpected != errReceived {
+			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+		}
+		if !tc.errExpected && tc.want != got {
+			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
 		}
 	}
 }
@@ -138,17 +133,12 @@ func TestSqrt(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		got, err := calculator.Sqrt(tc.num)
-		if tc.errExpected {
-			if err == nil {
-				t.Errorf("test name: %s expected error, got nil", tc.name)
-			}
-		} else {
-			if err != nil {
-				t.Errorf("test name: %s returned unexpected error: %s", tc.name, err)
-			}
-			if tc.want != got {
-				t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
-			}
+		errReceived := err != nil
+		if tc.errExpected != errReceived {
+			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+		}
+		if !tc.errExpected && tc.want != got {
+			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
 		}
 	}
 }
@@ -170,17 +160,12 @@ func TestStringMath(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		got, err := calculator.StringMath(tc.input)
-		if tc.errExpected {
-			if err == nil {
-				t.Errorf("test name: %s expected error, got nil", tc.name)
-			}
-		} else {
-			if err != nil {
-				t.Errorf("test name: %s returned unexpected error: %s", tc.name, err)
-			}
-			if tc.want != got {
-				t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
-			}
+		errReceived := err != nil
+		if tc.errExpected != errReceived {
+			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+		}
+		if !tc.errExpected && tc.want != got {
+			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
 		}
 	}
 }
