@@ -2,6 +2,7 @@ package calculator_test
 
 import (
 	"calculator"
+	"math"
 	"math/rand"
 	"testing"
 	"time"
@@ -111,6 +112,11 @@ func TestAllOperationsWithNoError(t *testing.T) {
 	}
 }
 
+// closeEnough helps us confidently assert floating point values that have very small imprecision.
+func closeEnough(a, b, tolerance float64) bool {
+	return math.Abs(a-b) <= tolerance
+}
+
 func TestDivide(t *testing.T) {
 	t.Parallel()
 	var testCases = []struct {
@@ -122,11 +128,10 @@ func TestDivide(t *testing.T) {
 	}{
 		{name: "positive", a: 2, b: 2, want: 1, errExpected: false},
 		{name: "negative", a: -4, b: 2, want: -2, errExpected: false},
-		// TODO: handle this correctly
-		// {name: "inaccurate floating point decimal", a: 2, b: 3, want: 0.666667, errExpected: false},
 		{name: "one zero", a: 0, b: 3, want: 0, errExpected: true},
 		{name: "two zeroes", a: 0, b: 0, want: 0, errExpected: true},
 		{name: "decimal", a: 2.5, b: 4, want: 0.625, errExpected: false},
+		{name: "decimal with tiny floating point imprecision", a: 2, b: 3, want: 0.666667, errExpected: false},
 		{name: "many numbers", a: 1024, b: 2, nums: []float64{2, 2, 2, 2, 2, 2, 2, 2}, want: 2, errExpected: false},
 	}
 	for _, tc := range testCases {
@@ -135,7 +140,7 @@ func TestDivide(t *testing.T) {
 		if tc.errExpected != errReceived {
 			t.Fatalf("test name: %s unexpected error status, got: %v", tc.name, err)
 		}
-		if !tc.errExpected && tc.want != got {
+		if !tc.errExpected && !closeEnough(tc.want, got, 0.001) {
 			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
 		}
 	}
