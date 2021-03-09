@@ -91,6 +91,26 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
+func TestAllOperationsWithNoError(t *testing.T) {
+	t.Parallel()
+	var testCases = []struct {
+		name string
+		fn   func(a, b float64, nums ...float64) float64
+		a, b float64
+		want float64
+	}{
+		{name: "Addition", fn: calculator.Add, a: 2, b: 2, want: 4},
+		{name: "Subtraction", fn: calculator.Subtract, a: 2, b: 2, want: 0},
+		{name: "Multiplication", fn: calculator.Multiply, a: 2, b: 2, want: 4},
+	}
+	for _, tc := range testCases {
+		got := tc.fn(tc.a, tc.b)
+		if tc.want != got {
+			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
+		}
+	}
+}
+
 func TestDivide(t *testing.T) {
 	t.Parallel()
 	var testCases = []struct {
@@ -102,6 +122,8 @@ func TestDivide(t *testing.T) {
 	}{
 		{name: "positive", a: 2, b: 2, want: 1, errExpected: false},
 		{name: "negative", a: -4, b: 2, want: -2, errExpected: false},
+		// TODO: handle this correctly
+		// {name: "inaccurate floating point decimal", a: 2, b: 3, want: 0.666667, errExpected: false},
 		{name: "one zero", a: 0, b: 3, want: 0, errExpected: true},
 		{name: "two zeroes", a: 0, b: 0, want: 0, errExpected: true},
 		{name: "decimal", a: 2.5, b: 4, want: 0.625, errExpected: false},
@@ -111,7 +133,7 @@ func TestDivide(t *testing.T) {
 		got, err := calculator.Divide(tc.a, tc.b, tc.nums...)
 		errReceived := err != nil
 		if tc.errExpected != errReceived {
-			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+			t.Fatalf("test name: %s unexpected error status, got: %v", tc.name, err)
 		}
 		if !tc.errExpected && tc.want != got {
 			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
@@ -135,7 +157,7 @@ func TestSqrt(t *testing.T) {
 		got, err := calculator.Sqrt(tc.num)
 		errReceived := err != nil
 		if tc.errExpected != errReceived {
-			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+			t.Fatalf("test name: %s unexpected error status, got: %v", tc.name, err)
 		}
 		if !tc.errExpected && tc.want != got {
 			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)
@@ -162,7 +184,7 @@ func TestStringMath(t *testing.T) {
 		got, err := calculator.StringMath(tc.input)
 		errReceived := err != nil
 		if tc.errExpected != errReceived {
-			t.Fatalf("test name: %s unexpected error, got: %v", tc.name, err)
+			t.Fatalf("test name: %s unexpected error status, got: %v", tc.name, err)
 		}
 		if !tc.errExpected && tc.want != got {
 			t.Errorf("test name: %s, want %f, got %f", tc.name, tc.want, got)

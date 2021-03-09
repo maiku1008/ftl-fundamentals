@@ -2,6 +2,7 @@
 package calculator
 
 import (
+	"errors"
 	"fmt"
 	"math"
 	"strings"
@@ -9,7 +10,7 @@ import (
 
 // Add takes a list of numbers and returns the result of adding them together.
 func Add(a, b float64, nums ...float64) float64 {
-	var result float64 = a + b
+	result := a + b
 	for _, n := range nums {
 		result += n
 	}
@@ -18,7 +19,7 @@ func Add(a, b float64, nums ...float64) float64 {
 
 // Subtract takes a list of numbers and returns the result of subtracting them from each other.
 func Subtract(a, b float64, nums ...float64) float64 {
-	var result float64 = a - b
+	result := a - b
 	for _, n := range nums {
 		result -= n
 	}
@@ -27,17 +28,17 @@ func Subtract(a, b float64, nums ...float64) float64 {
 
 // Multiply takes a list of numbers and multiplies them.
 func Multiply(a, b float64, nums ...float64) float64 {
-	var product float64 = a * b
+	result := a * b
 	for _, n := range nums {
-		product *= n
+		result *= n
 	}
-	return product
+	return result
 }
 
 // Divide takes a list of numbers and divides them.
 // Error is returned when dividing by 0.
 func Divide(a, b float64, nums ...float64) (float64, error) {
-	err := fmt.Errorf("cannot divide by zero")
+	err := errors.New("cannot divide by zero")
 	if a == 0 || b == 0 {
 		return 0, err
 	}
@@ -91,6 +92,6 @@ func StringMath(input string) (float64, error) {
 	case "/":
 		return Divide(a, b)
 	default:
-		return 0, fmt.Errorf("no operator found in string")
+		return 0, errors.New("no operator found in string")
 	}
 }
