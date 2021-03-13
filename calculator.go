@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"strings"
 )
 
 // Add takes a list of numbers and returns the result of adding them together.
@@ -69,17 +68,9 @@ func StringMath(input string) (float64, error) {
 	var operation string
 	var err error
 
-	operations := []string{"+", "-", "*", "/"}
-	for _, op := range operations {
-		if strings.Contains(input, op) {
-			operation = op
-			input = strings.Replace(input, op, " ", 1)
-			_, err = fmt.Sscanf(input, "%f%f", &a, &b)
-			if err != nil {
-				return 0, err
-			}
-			break
-		}
+	_, err = fmt.Sscanf(input, "%f%1s%f", &a, &operation, &b)
+	if err != nil {
+		return 0, err
 	}
 
 	switch operation {
