@@ -39,13 +39,13 @@ func Multiply(a, b float64, nums ...float64) float64 {
 // Error is returned when dividing by 0.
 func Divide(a, b float64, nums ...float64) (float64, error) {
 	err := errors.New("cannot divide by zero")
-	if a == 0 || b == 0 {
+	if b == 0 {
 		return 0, err
 	}
 
 	var result float64 = a / b
 	for _, n := range nums {
-		if n == 0 || result == 0 {
+		if n == 0 {
 			return 0, err
 		}
 		result /= n

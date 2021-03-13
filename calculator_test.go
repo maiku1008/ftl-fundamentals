@@ -128,7 +128,7 @@ func TestDivide(t *testing.T) {
 	}{
 		{name: "positive", a: 2, b: 2, want: 1, errExpected: false},
 		{name: "negative", a: -4, b: 2, want: -2, errExpected: false},
-		{name: "one zero", a: 0, b: 3, want: 0, errExpected: true},
+		{name: "one zero", a: 0, b: 3, want: 0, errExpected: false},
 		{name: "two zeroes", a: 0, b: 0, want: 0, errExpected: true},
 		{name: "decimal", a: 2.5, b: 4, want: 0.625, errExpected: false},
 		{name: "decimal with tiny floating point imprecision", a: 2, b: 3, want: 0.666667, errExpected: false},
